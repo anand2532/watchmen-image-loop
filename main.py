@@ -108,13 +108,11 @@ print(f"INFO, [ENC] Encryption node initialized for my_addr: {my_addr}")
 def get_epoch_ms(): # get epoch milliseconds, eg. 1381791310000
     return utime.time_ns() // 1_000_000
 
-def encrypt_if_needed(msg_typ, msg):
-    # Input: msg_typ: str message type, msg: bytes; Output: bytes (possibly encrypted message)
-    if msg_typ == "P":
-        msgbytes = enc.encrypt_hybrid(msg, encnode.get_pub_key())
-        print(f"DEBUG, {msg_typ} : Len msg = {len(msg)}, len msgbytes = {len(msgbytes)}")
-        return msgbytes
-    return msg
+def encrypt_if_needed(msg):
+    # Input: msg: bytes; Output: bytes (possibly encrypted message)
+    msgbytes = enc.encrypt_hybrid(msg, encnode.get_pub_key())
+    print(f"DEBUG, Len msg = {len(msg)}, len msgbytes = {len(msgbytes)}")
+    return msgbytes
 
 # ---------------------------------------------------------------------------
 # Main Task: Continuously capture images, save raw and encrypted versions
@@ -162,7 +160,7 @@ def main():
                 
             # Encrypt image immediately
             try:
-                enc_msgbytes = encrypt_if_needed("P", imgbytes)
+                enc_msgbytes = encrypt_if_needed(imgbytes)
                 enc_filepath = f"{MY_IMAGE_DIR}/{my_addr}_{event_epoch_ms}.enc"
                 print(f"DEBUG, [CAPTURE] Saving encrypted image to {enc_filepath} : encrypted size = {len(enc_msgbytes)} bytes...")
                 # Save encrypted bytes to binary file

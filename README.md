@@ -19,8 +19,8 @@ When saving images to SD card on OpenMV RT1062, the images become corrupted and 
 ```
 storage-issue/
 ├── main.py          # Main script: continuous image capture, saves raw images to SD card
-├── test1.py         # Test Case 1: Read JPG image → save to SD card → verify read back
-├── test2.py         # Test Case 2: Read binary file → process → save → verify read back
+├── test1.py         # Test Case 1: Read saved JPG image → verify read → hybrid encryption → save encrypted binary to <filename>.enc 
+├── test2.py         # Test Case 2: Read encrypted binary file → process and decrypt image → save raw jpg image to <filename>.jpg 
 ├── enc.py           # Encryption utilities (used by test scripts for processing)
 ├── enc_priv.py      # Private key repository (used by test scripts)
 ├── rsa/             # RSA encryption library (dependency)
